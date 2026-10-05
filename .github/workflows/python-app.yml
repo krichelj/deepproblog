@@ -17,10 +17,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up SWIPL
+      # SWI-Prolog 8.4.3 built from source into a shared read-only prefix on each runner host
       run: |
-        sudo apt-add-repository ppa:swi-prolog/stable -y
-        sudo apt-get update
-        sudo apt-get install swi-prolog=8.4* swi-prolog-nox=8.4* swi-prolog-x=8.4*  -y
+        P=/scratch/jkrichel/own-runners/tools/swipl-8.4.3
+        echo "$P/bin" >> "$GITHUB_PATH"
+        echo "SWI_HOME_DIR=$P/lib/swipl" >> "$GITHUB_ENV"
+        echo "LD_LIBRARY_PATH=$P/lib/swipl/lib/x86_64-linux${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
+        "$P/bin/swipl" --version
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
