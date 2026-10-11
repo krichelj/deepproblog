@@ -19,7 +19,7 @@ jobs:
     - name: Set up SWIPL
       # SWI-Prolog 8.4.3 built from source into a shared read-only prefix on each runner host
       run: |
-        P=/usr/local/tools/swipl-8.4.3
+        P=${{ secrets.CLUSTER_SCRATCH_ROOT }}/own-runners/tools/swipl-8.4.3
         echo "$P/bin" >> "$GITHUB_PATH"
         echo "SWI_HOME_DIR=$P/lib/swipl" >> "$GITHUB_ENV"
         echo "LD_LIBRARY_PATH=$P/lib/swipl/lib/x86_64-linux${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
